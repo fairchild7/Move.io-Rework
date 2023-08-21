@@ -17,13 +17,31 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new MoveState());
-        id = 1; //TODO: fix this by levelmanager
     }
 
     public void SetDestination(Vector3 destination)
     {
         this.destination = destination;
         agent.SetDestination(destination);
+    }
+
+    public void RandomMove()
+    {
+        int randomTarget = Random.Range(0, LevelManager.Ins.currentEnemies.Count + 1);
+        if (randomTarget == LevelManager.Ins.currentEnemies.Count)
+        {
+            SetDestination(LevelManager.Ins.player.tf.position);
+        }
+        else
+        {
+            SetDestination(LevelManager.Ins.currentEnemies[randomTarget].tf.position);
+        }
+    }
+
+    public void StopMoving()
+    {
+        ChangeAnim(Constants.ANIM_IDLE);
+        SetDestination(tf.position);
     }
 
     public void ChangeState(IState newState)
@@ -39,5 +57,18 @@ public class Enemy : Character
         {
             currentState.OnEnter(this);
         }
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        LevelManager.Ins.currentEnemies.Remove(this);
+        Invoke(nameof(OnDespawn), 1f);
+        
+    }
+
+    private void OnDespawn()
+    {
+        SimplePool.Despawn(this);
     }
 }

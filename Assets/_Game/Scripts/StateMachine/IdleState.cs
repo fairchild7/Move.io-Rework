@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : IState
+public class IdleState : IState
 {
     float timer;
-    float attackDuration;
+    float idleDuration;
 
     public void OnEnter(Enemy enemy)
     {
         timer = 0f;
+        enemy.ChangeAnim(Constants.ANIM_IDLE);
+        idleDuration = Random.Range(0.5f, 2f);
         enemy.StopMoving();
-        attackDuration = Random.Range(1f, 2f); //check this
-        enemy.Attack();
     }
 
     public void OnExecute(Enemy enemy)
     {
         timer += Time.deltaTime;
-        if (timer > attackDuration)
+        if (timer > idleDuration)
         {
             enemy.ChangeState(new MoveState());
         }
@@ -26,6 +26,6 @@ public class AttackState : IState
 
     public void OnExit(Enemy enemy)
     {
-        
+
     }
 }

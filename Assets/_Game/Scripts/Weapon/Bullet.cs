@@ -28,7 +28,7 @@ public class Bullet : GameUnit
         {
             if (target.GetId() != id)
             {
-                Debug.Log("hit");
+                target.OnDeath();
                 OnDespawn();
             }
         }   

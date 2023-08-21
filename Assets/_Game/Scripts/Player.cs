@@ -13,23 +13,37 @@ public class Player : Character
         id = 0;
     }
 
-    private void FixedUpdate()
+    protected override void Update()
     {
-        rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
-        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+        base.Update();
+        if (!isDead)
         {
-            if (rb.velocity != Vector3.zero)
+            rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
+            if (joystick.Horizontal != 0 || joystick.Vertical != 0)
             {
-                transform.rotation = Quaternion.LookRotation(rb.velocity);
+                StopAllCoroutines();
+                if (rb.velocity != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(rb.velocity);
+                }
+                ChangeAnim(Constants.ANIM_RUN);
+                bulletCount = 1;
             }
-            ChangeAnim(Constants.ANIM_RUN);
-            //canAttack = false;
-            //numBullet = 1;
-        }
-        else
-        {
-            ChangeAnim(Constants.ANIM_IDLE);
-            //canAttack = true;
+            else if (joystick.Horizontal == 0 && joystick.Vertical == 0)
+            {
+                if (enemyInRange.Count > 0 && SetTarget() != null)
+                {
+                    if (bulletCount > 0)
+                    {
+                        Attack();
+                    }
+                }
+                else
+                {
+                    weaponPos.gameObject.SetActive(true);
+                    ChangeAnim(Constants.ANIM_IDLE);
+                }
+            }
         }
     }
 }

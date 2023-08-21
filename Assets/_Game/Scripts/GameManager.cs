@@ -4,16 +4,17 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum GameState
+{
+    MainMenu, GamePlay, Finish, Revive, Setting
+}
+
 public class GameManager : Singleton<GameManager>
 {
-    //[SerializeField] UserData userData;
-    //[SerializeField] CSVData csv;
-    //private static GameState gameState = GameState.MainMenu;
+    private static GameState gameState;
 
-    // Start is called before the first frame update
-    protected void Awake()
+    private void Awake()
     {
-        //base.Awake();
         Input.multiTouchEnabled = false;
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -24,23 +25,18 @@ public class GameManager : Singleton<GameManager>
         {
             Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
         }
+    }
 
-        //csv.OnInit();
-        //userData?.OnInitData();
-
-        //ChangeState(GameState.MainMenu);
-
+    private void Start()
+    {
+        ChangeState(GameState.MainMenu);
         UIManager.Ins.OpenUI<MainMenu>();
     }
 
-    //public static void ChangeState(GameState state)
-    //{
-    //    gameState = state;
-    //}
+    public static void ChangeState(GameState state)
+    {
+        gameState = state;
+    }
 
-    //public static bool IsState(GameState state)
-    //{
-    //    return gameState == state;
-    //}
-  
+    public static bool IsState(GameState state) => gameState == state;
 }
