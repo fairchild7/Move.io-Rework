@@ -14,4 +14,5 @@ public static class Constants
 
     public const string TAG_PLAYER = "Player";
     public const string TAG_ENEMY = "Enemy";
+    public const string TAG_BULLET = "Bullet";
 }

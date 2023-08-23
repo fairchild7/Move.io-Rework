@@ -30,7 +30,24 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         ChangeState(GameState.MainMenu);
-        UIManager.Ins.OpenUI<MainMenu>();
+        //UIManager.Ins.OpenUI<MainMenu>();
+    }
+
+    //delete this later
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (IsState(GameState.MainMenu))
+            {
+                ChangeState(GameState.GamePlay);
+            }
+            if (IsState(GameState.Revive))
+            {
+                ChangeState(GameState.GamePlay);
+                LevelManager.Ins.player.OnInit();
+            }
+        }    
     }
 
     public static void ChangeState(GameState state)

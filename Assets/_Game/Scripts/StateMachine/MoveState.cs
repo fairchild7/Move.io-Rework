@@ -10,18 +10,18 @@ public class MoveState : IState
     public void OnEnter(Enemy enemy)
     {
         timer = 0f;
-        //enemy. ~ random move
-        moveDuration = Random.Range(2f, 5f);
+        enemy.RandomMove();
+        moveDuration = Random.Range(3f, 5f);
     }
 
     public void OnExecute(Enemy enemy)
     {
         timer += Time.deltaTime;
-        if (timer > moveDuration)
+        if (timer > moveDuration || enemy.IsDestination)
         {
             enemy.ChangeState(new IdleState());
         }
-        if (enemy.enemyInRange.Count > 0 && timer > 1f)
+        if (enemy.enemyInRange.Count > 0 && timer > 2f)
         {
             enemy.ChangeState(new AttackState());
         }

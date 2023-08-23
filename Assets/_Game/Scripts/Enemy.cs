@@ -9,8 +9,8 @@ public class Enemy : Character
     [SerializeField] RectTransform arrowPrefab;
 
     private Vector3 destination;
-    private IState currentState;
 
+    public IState currentState;
     public bool IsDestination => Vector3.Distance(tf.position, destination + (tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
     public override void OnInit()
@@ -27,6 +27,7 @@ public class Enemy : Character
 
     public void RandomMove()
     {
+        ChangeAnim(Constants.ANIM_RUN);
         int randomTarget = Random.Range(0, LevelManager.Ins.currentEnemies.Count + 1);
         if (randomTarget == LevelManager.Ins.currentEnemies.Count)
         {
@@ -62,6 +63,7 @@ public class Enemy : Character
     public override void OnDeath()
     {
         base.OnDeath();
+        agent.isStopped = true;
         LevelManager.Ins.currentEnemies.Remove(this);
         Invoke(nameof(OnDespawn), 1f);
         

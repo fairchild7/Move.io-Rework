@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boomerang : MonoBehaviour
+public class Boomerang : Bullet
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnInit()
     {
-        
+        rb.velocity = tf.forward * bulletSpeed;
+        rb.angularVelocity = Vector3.up * 5f;
+        StartCoroutine(GoBack());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator GoBack()
     {
-        
+        yield return new WaitForSeconds(1f);
+        Vector3 dir = Vector3.Normalize(owner.tf.position - tf.position);
+        rb.velocity = dir * bulletSpeed;
+        yield return new WaitForSeconds(1f);
+        OnDespawn();
     }
 }

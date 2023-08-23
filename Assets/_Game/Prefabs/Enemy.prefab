@@ -311,6 +311,7 @@ MonoBehaviour:
   throwPoint: {fileID: 138074122338786070}
   weaponPos: {fileID: 1958032155678545896}
   currentWeapon: 0
+  attackCollider: {fileID: 5137465537760385235}
   enemyInRange: []
   agent: {fileID: 7997752596504467202}
   arrowPrefab: {fileID: 0}

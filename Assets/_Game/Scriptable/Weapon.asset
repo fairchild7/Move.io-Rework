@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 1038833398942070763, guid: 72e5dd9cda4de4e4e9030017cc851ff3, type: 3}
-  - {fileID: 1038833398942070763, guid: 72e5dd9cda4de4e4e9030017cc851ff3, type: 3}
+  - {fileID: -7341492907339242628, guid: 6cb96667010aaff47a681ffa01579e97, type: 3}
+  - {fileID: -7341492907339242628, guid: 6cb96667010aaff47a681ffa01579e97, type: 3}
   - {fileID: 1038833398942070763, guid: 72e5dd9cda4de4e4e9030017cc851ff3, type: 3}
   - {fileID: 1038833398942070763, guid: 72e5dd9cda4de4e4e9030017cc851ff3, type: 3}

@@ -9,13 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7284078420321114977}
-  - component: {fileID: 3067898925972741587}
   - component: {fileID: -3439519175228591749}
   - component: {fileID: 501723801510522553}
-  - component: {fileID: -8055498180915662821}
+  - component: {fileID: -8847729523899253078}
   m_Layer: 0
   m_Name: Knife
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,23 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3067898925972741587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4234545441232432491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd0826152353b7409ceade464efe3cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolType: 3
-  tf: {fileID: 7284078420321114977}
-  id: 0
-  bulletSpeed: 5
-  rb: {fileID: 0}
 --- !u!65 &-3439519175228591749
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -64,8 +46,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.22498365, y: 0.11240645, z: 1}
+  m_Center: {x: -0.015852667, y: -0.0006129425, z: 0}
 --- !u!54 &501723801510522553
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82,7 +64,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8055498180915662821
+--- !u!114 &-8847729523899253078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,13 +73,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4234545441232432491}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd0826152353b7409ceade464efe3cc, type: 3}
+  m_Script: {fileID: 11500000, guid: f3dd3a455cafb6c49adc94282214d28d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 3
   tf: {fileID: 7284078420321114977}
-  id: 0
+  owner: {fileID: 0}
   bulletSpeed: 5
+  lifeTime: 2
   rb: {fileID: 501723801510522553}
 --- !u!1001 &5751233446889095537
 PrefabInstance:

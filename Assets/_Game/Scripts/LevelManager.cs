@@ -22,9 +22,16 @@ public class LevelManager : Singleton<LevelManager>
 
     void Update()
     {
-        if (currentEnemies.Count < currentLevel.GetMaxCurrentEnemy() && totalEnemy < currentLevel.GetMaxEnemy())
+        if (GameManager.IsState(GameState.GamePlay))
         {
-            SpawnEnemy();
+            if (currentEnemies.Count < currentLevel.GetMaxCurrentEnemy() && totalEnemy < currentLevel.GetMaxEnemy())
+            {
+                SpawnEnemy();
+            }
+            for (int i = 0; i < currentEnemies.Count; i++)
+            {
+                currentEnemies[i].currentState.OnExecute(currentEnemies[i]);
+            }
         }
     }
 

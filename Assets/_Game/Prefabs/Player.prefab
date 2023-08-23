@@ -315,6 +315,7 @@ MonoBehaviour:
   throwPoint: {fileID: 138074122338786070}
   weaponPos: {fileID: 4512417374267005846}
   currentWeapon: 0
+  attackCollider: {fileID: 8007577631363069355}
   enemyInRange: []
   joystick: {fileID: 0}
   moveSpeed: 5

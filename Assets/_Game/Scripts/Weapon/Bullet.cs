@@ -4,33 +4,29 @@ using UnityEngine;
 
 public class Bullet : GameUnit
 {
-    public int id;
+    public Character owner;
 
-    [SerializeField] float bulletSpeed = 5f;
+    [SerializeField] protected float bulletSpeed = 5f;
+    [SerializeField] float lifeTime = 2f;
 
-    private Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
 
     public virtual void OnInit()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * bulletSpeed;
+        rb.velocity = tf.forward * bulletSpeed;
+        StartCoroutine(IEDespawnOnLifeTime());
     }
 
     public virtual void OnDespawn()
     {
+        StopAllCoroutines();
+        tf.localScale = new Vector3(1f, 1f, 1f);
         SimplePool.Despawn(this);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual IEnumerator IEDespawnOnLifeTime()
     {
-        Character target = other.GetComponent<Character>();
-        if (target != null)
-        {
-            if (target.GetId() != id)
-            {
-                target.OnDeath();
-                OnDespawn();
-            }
-        }   
+        yield return new WaitForSeconds(lifeTime);
+        SimplePool.Despawn(this);
     }
 }

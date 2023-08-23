@@ -15,4 +15,16 @@ public static class Cache
         }
         return characters[collider];
     }
+
+    private static Dictionary<Collider, Bullet> bullets = new Dictionary<Collider, Bullet>();
+
+    public static Bullet GetBullet(Collider collider)
+    {
+        if (!bullets.ContainsKey(collider))
+        {
+            Bullet bullet = collider.GetComponent<Bullet>();
+            bullets.Add(collider, bullet);
+        }
+        return bullets[collider];
+    }
 }

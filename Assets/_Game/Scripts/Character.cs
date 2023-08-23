@@ -13,6 +13,7 @@ public class Character : GameUnit
     [SerializeField] Transform throwPoint;
     [SerializeField] protected Transform weaponPos;
     [SerializeField] WeaponType currentWeapon;
+    [SerializeField] Collider attackCollider;
 
     private string currentAnim;
 
@@ -25,11 +26,6 @@ public class Character : GameUnit
     public int GetId() => id;
     public void SetId(int id) { this.id = id; }
     public List<Character> enemyInRange = new List<Character>();
-
-    private void Start()
-    {
-        OnInit();
-    }
 
     protected virtual void Update()
     {
@@ -45,15 +41,24 @@ public class Character : GameUnit
         enemyInRange.Clear();
         ChangeAnim(Constants.ANIM_IDLE);
 
-        EquipWeapon(WeaponType.Knife);
-        currentWeapon = WeaponType.Knife;
+        if (Random.Range(1, 3) == 1)
+        {
+            EquipWeapon(WeaponType.Knife);
+        }
+        else
+        {
+            EquipWeapon(WeaponType.Boomerang);
+        }
     }
 
     public void ChangeAnim(string animName)
     {
         if (currentAnim != animName)
         {
-            animator.ResetTrigger(currentAnim);
+            if (currentAnim != null)
+            {
+                animator.ResetTrigger(currentAnim);
+            }
             currentAnim = animName;
             animator.SetTrigger(currentAnim);
         }
@@ -63,6 +68,7 @@ public class Character : GameUnit
     {
         Weapon weap = weaponData.GetWeapon(weapType);
         Instantiate(weap.GetPrefab(), weaponPos);
+        currentWeapon = weapType;
     }
 
     public virtual void Attack()
@@ -89,7 +95,7 @@ public class Character : GameUnit
 
         Weapon weap = weaponData.GetWeapon(currentWeapon);
         Bullet bullet = (Bullet)SimplePool.Spawn(weap.GetBullet().poolType, throwPoint.position, Quaternion.LookRotation(transform.forward));
-        bullet.id = id;
+        bullet.owner = this;
         bullet.OnInit();
         bullet.tf.localScale *= (1 + 0.1f * level);
 
@@ -121,7 +127,33 @@ public class Character : GameUnit
 
     public virtual void OnDeath()
     {
+        StopAllCoroutines();
         isDead = true;
         ChangeAnim(Constants.ANIM_DEAD);
+    }
+
+    public void LevelUp()
+    {
+        level++;
+        tf.localScale = new Vector3(1f, 1f, 1f) * (1 + 0.1f * level);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(Constants.TAG_BULLET))
+        {
+            Bullet bullet = Cache.GetBullet(other);
+            if (!(bullet.owner == this))
+            {
+                if (!Physics.GetIgnoreCollision(other, attackCollider))
+                {
+                    Physics.IgnoreCollision(other, attackCollider);
+                    return;
+                }
+                OnDeath();
+                bullet.owner.LevelUp();
+                bullet.OnDespawn();
+            }
+        }
     }
 }

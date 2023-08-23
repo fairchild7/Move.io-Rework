@@ -46,4 +46,10 @@ public class Player : Character
             }
         }
     }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        GameManager.ChangeState(GameState.Revive);
+    }
 }
