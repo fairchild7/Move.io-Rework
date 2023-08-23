@@ -30,7 +30,11 @@ public class LevelManager : Singleton<LevelManager>
             }
             for (int i = 0; i < currentEnemies.Count; i++)
             {
-                currentEnemies[i].currentState.OnExecute(currentEnemies[i]);
+                if (currentEnemies[i].currentState != null)
+                {
+                    currentEnemies[i].currentState.OnExecute(currentEnemies[i]);
+                }
+                Indicator.Ins.CheckNavigation(currentEnemies[i]);
             }
         }
     }

@@ -25,6 +25,7 @@ public class Character : GameUnit
 
     public int GetId() => id;
     public void SetId(int id) { this.id = id; }
+    public bool IsDead() => isDead;
     public List<Character> enemyInRange = new List<Character>();
 
     protected virtual void Update()

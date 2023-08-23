@@ -6,10 +6,10 @@ using UnityEngine.AI;
 public class Enemy : Character
 {
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] RectTransform arrowPrefab;
 
     private Vector3 destination;
 
+    public RectTransform arrowPrefab;
     public IState currentState;
     public bool IsDestination => Vector3.Distance(tf.position, destination + (tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
@@ -17,6 +17,8 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new MoveState());
+        arrowPrefab = Instantiate()
+        Indicator.Ins.SetIndicatorParent(this);
     }
 
     public void SetDestination(Vector3 destination)
