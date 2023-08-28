@@ -5,14 +5,13 @@ using UnityEngine;
 public class Character : GameUnit
 {
     [SerializeField] protected Rigidbody rb;
-    [SerializeField] protected int id;
+    [SerializeField] protected Transform weaponPos;
+    [SerializeField] protected Transform hairPos;
+    [SerializeField] protected SkinnedMeshRenderer pantsMesh;
 
-    [SerializeField] WeaponData weaponData;
-    [SerializeField] LayerMask characterLayer;
     [SerializeField] Animator animator;
     [SerializeField] Transform throwPoint;
-    [SerializeField] protected Transform weaponPos;
-    [SerializeField] WeaponType currentWeapon;
+    [SerializeField] Weapon currentWeapon;
     [SerializeField] Collider attackCollider;
 
     private string currentAnim;
@@ -23,10 +22,9 @@ public class Character : GameUnit
     protected int level = 0;
     protected int bulletCount = 1;
 
-    public int GetId() => id;
-    public void SetId(int id) { this.id = id; }
     public bool IsDead() => isDead;
     public List<Character> enemyInRange = new List<Character>();
+    public string killedBy;
 
     protected virtual void Update()
     {
@@ -50,6 +48,9 @@ public class Character : GameUnit
         {
             EquipWeapon(WeaponType.Boomerang);
         }
+
+        EquipHair((HairType)Random.Range(0, 4));
+        EquipPants((PantsType)Random.Range(0, 4));
     }
 
     public void ChangeAnim(string animName)
@@ -67,9 +68,29 @@ public class Character : GameUnit
 
     public void EquipWeapon(WeaponType weapType)
     {
-        Weapon weap = weaponData.GetWeapon(weapType);
+        if (weaponPos.transform.childCount > 0)
+        {
+            Destroy(weaponPos.transform.GetChild(0).gameObject);
+        }
+        Weapon weap = DataManager.Ins.weaponData.GetWeapon(weapType);
         Instantiate(weap.GetPrefab(), weaponPos);
-        currentWeapon = weapType;
+        currentWeapon = weap;
+    }
+
+    public void EquipHair(HairType hairType)
+    {
+        if (hairPos.transform.childCount > 0)
+        {
+            Destroy(hairPos.transform.GetChild(0).gameObject);
+        }
+        HairData hair = DataManager.Ins.hairData.GetHairData(hairType);
+        Instantiate(hair.GetPrefab(), hairPos);
+    }
+
+    public void EquipPants(PantsType pantType)
+    {
+        PantsData pants = DataManager.Ins.pantsData.GetPantsData(pantType);
+        pantsMesh.material = pants.GetMaterial();
     }
 
     public virtual void Attack()
@@ -94,9 +115,9 @@ public class Character : GameUnit
 
         weaponPos.gameObject.SetActive(false);
 
-        Weapon weap = weaponData.GetWeapon(currentWeapon);
-        Bullet bullet = (Bullet)SimplePool.Spawn(weap.GetBullet().poolType, throwPoint.position, Quaternion.LookRotation(transform.forward));
+        Bullet bullet = (Bullet)SimplePool.Spawn(currentWeapon.GetBullet().poolType, throwPoint.position, Quaternion.LookRotation(transform.forward));
         bullet.owner = this;
+        //target = new Vector3(target.x, throwPoint.position.y, target.z);
         bullet.OnInit();
         bullet.tf.localScale *= (1 + 0.1f * level);
 
@@ -131,6 +152,9 @@ public class Character : GameUnit
         StopAllCoroutines();
         isDead = true;
         ChangeAnim(Constants.ANIM_DEAD);
+
+        LevelManager.Ins.currentAlive--;
+        LevelManager.Ins.UpdateAliveText();
     }
 
     public void LevelUp()
@@ -151,6 +175,7 @@ public class Character : GameUnit
                     Physics.IgnoreCollision(other, attackCollider);
                     return;
                 }
+                killedBy = bullet.owner.gameObject.name;
                 OnDeath();
                 bullet.owner.LevelUp();
                 bullet.OnDespawn();

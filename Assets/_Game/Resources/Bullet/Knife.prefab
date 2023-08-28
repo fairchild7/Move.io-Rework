@@ -79,8 +79,8 @@ MonoBehaviour:
   poolType: 3
   tf: {fileID: 7284078420321114977}
   owner: {fileID: 0}
-  bulletSpeed: 5
-  lifeTime: 2
+  bulletSpeed: 10
+  lifeTime: 1.5
   rb: {fileID: 501723801510522553}
 --- !u!1001 &5751233446889095537
 PrefabInstance:

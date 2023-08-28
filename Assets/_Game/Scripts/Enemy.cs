@@ -13,11 +13,15 @@ public class Enemy : Character
     public IState currentState;
     public bool IsDestination => Vector3.Distance(tf.position, destination + (tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
+    private void Start()
+    {
+        OnInit();
+    }
+
     public override void OnInit()
     {
         base.OnInit();
         ChangeState(new MoveState());
-        arrowPrefab = Instantiate()
         Indicator.Ins.SetIndicatorParent(this);
     }
 
@@ -66,6 +70,7 @@ public class Enemy : Character
     {
         base.OnDeath();
         agent.isStopped = true;
+        arrowPrefab.gameObject.SetActive(false);
         LevelManager.Ins.currentEnemies.Remove(this);
         Invoke(nameof(OnDespawn), 1f);
         

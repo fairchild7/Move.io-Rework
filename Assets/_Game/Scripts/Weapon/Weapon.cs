@@ -9,7 +9,7 @@ public enum AttackType
     Melee = 1
 }
 
-public class Weapon : MonoBehaviour
+public class Weapon: MonoBehaviour
 {
     [SerializeField] int cost;
     [SerializeField] Image image;

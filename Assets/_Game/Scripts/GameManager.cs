@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         ChangeState(GameState.MainMenu);
-        //UIManager.Ins.OpenUI<MainMenu>();
+        UIManager.Ins.OpenUI<UIMainMenu>();
     }
 
     //delete this later
@@ -38,15 +38,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (IsState(GameState.MainMenu))
-            {
-                ChangeState(GameState.GamePlay);
-            }
-            if (IsState(GameState.Revive))
-            {
-                ChangeState(GameState.GamePlay);
-                LevelManager.Ins.player.OnInit();
-            }
+            Debug.Log(gameState);
         }    
     }
 

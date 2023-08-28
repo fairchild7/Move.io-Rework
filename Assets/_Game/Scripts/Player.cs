@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player : Character
 {
@@ -10,38 +11,40 @@ public class Player : Character
     public override void OnInit()
     {
         base.OnInit();
-        id = 0;
     }
 
     protected override void Update()
     {
-        base.Update();
-        if (!isDead)
+        if (GameManager.IsState(GameState.GamePlay))
         {
-            rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
-            if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+            base.Update();
+            if (!isDead)
             {
-                StopAllCoroutines();
-                if (rb.velocity != Vector3.zero)
+                rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
+                if (joystick.Horizontal != 0 || joystick.Vertical != 0)
                 {
-                    transform.rotation = Quaternion.LookRotation(rb.velocity);
-                }
-                ChangeAnim(Constants.ANIM_RUN);
-                bulletCount = 1;
-            }
-            else if (joystick.Horizontal == 0 && joystick.Vertical == 0)
-            {
-                if (enemyInRange.Count > 0 && SetTarget() != null)
-                {
-                    if (bulletCount > 0)
+                    StopAllCoroutines();
+                    if (rb.velocity != Vector3.zero)
                     {
-                        Attack();
+                        transform.rotation = Quaternion.LookRotation(rb.velocity);
                     }
+                    ChangeAnim(Constants.ANIM_RUN);
+                    bulletCount = 1;
                 }
-                else
+                else if (joystick.Horizontal == 0 && joystick.Vertical == 0)
                 {
-                    weaponPos.gameObject.SetActive(true);
-                    ChangeAnim(Constants.ANIM_IDLE);
+                    if (enemyInRange.Count > 0 && SetTarget() != null)
+                    {
+                        if (bulletCount > 0)
+                        {
+                            Attack();
+                        }
+                    }
+                    else
+                    {
+                        weaponPos.gameObject.SetActive(true);
+                        ChangeAnim(Constants.ANIM_IDLE);
+                    }
                 }
             }
         }
@@ -50,6 +53,6 @@ public class Player : Character
     public override void OnDeath()
     {
         base.OnDeath();
-        GameManager.ChangeState(GameState.Revive);
+        LevelManager.Ins.OnLose();
     }
 }

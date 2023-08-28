@@ -133,7 +133,7 @@ public class UIManager : Singleton<UIManager>
             }
         }
 
-        return uiCanvasPrefab[typeof(T)] as T;
+        return uiCanvasPrefab[typeof(T)] as T;  
     }
 
 
