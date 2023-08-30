@@ -11,4 +11,16 @@ public class UIMainMenu : UICanvas
         LevelManager.Ins.OnInit();
         Close(0);
     }
+
+    public void WeaponButton()
+    {
+        UIManager.Ins.OpenUI<UIWeapon>();
+        Close(0);
+    }
+
+    public void SkinButton()
+    {
+        UIManager.Ins.OpenUI<UISkin>();
+        Close(0);
+    }
 }

@@ -11,11 +11,13 @@ public class Character : GameUnit
 
     [SerializeField] Animator animator;
     [SerializeField] Transform throwPoint;
-    [SerializeField] Weapon currentWeapon;
     [SerializeField] Collider attackCollider;
 
     private string currentAnim;
 
+    protected Weapon currentWeapData;
+    protected GameObject currentWeapon;
+    protected GameObject currentHair;
     protected bool isDead = false;
     protected float waitToThrow = 0.4f;
     protected float attackTime = 1f;
@@ -28,7 +30,17 @@ public class Character : GameUnit
 
     protected virtual void Update()
     {
-        
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Random.Range(1, 3) == 1)
+            {
+                EquipWeapon(WeaponType.Knife);
+            }
+            else
+            {
+                EquipWeapon(WeaponType.Boomerang);
+            }
+        }
     }
 
     public virtual void OnInit()
@@ -68,23 +80,23 @@ public class Character : GameUnit
 
     public void EquipWeapon(WeaponType weapType)
     {
-        if (weaponPos.transform.childCount > 0)
+        if (currentWeapon != null)
         {
-            Destroy(weaponPos.transform.GetChild(0).gameObject);
+            Destroy(currentWeapon.gameObject);
         }
         Weapon weap = DataManager.Ins.weaponData.GetWeapon(weapType);
-        Instantiate(weap.GetPrefab(), weaponPos);
-        currentWeapon = weap;
+        currentWeapon = Instantiate(weap.GetPrefab(), weaponPos);
+        currentWeapData = weap;
     }
 
     public void EquipHair(HairType hairType)
     {
-        if (hairPos.transform.childCount > 0)
+        if (currentHair != null)
         {
-            Destroy(hairPos.transform.GetChild(0).gameObject);
+            Destroy(currentHair.gameObject);
         }
         HairData hair = DataManager.Ins.hairData.GetHairData(hairType);
-        Instantiate(hair.GetPrefab(), hairPos);
+        currentHair = Instantiate(hair.GetPrefab(), hairPos);
     }
 
     public void EquipPants(PantsType pantType)
@@ -115,7 +127,7 @@ public class Character : GameUnit
 
         weaponPos.gameObject.SetActive(false);
 
-        Bullet bullet = (Bullet)SimplePool.Spawn(currentWeapon.GetBullet().poolType, throwPoint.position, Quaternion.LookRotation(transform.forward));
+        Bullet bullet = (Bullet)SimplePool.Spawn(currentWeapData.GetBullet().poolType, throwPoint.position, Quaternion.LookRotation(transform.forward));
         bullet.owner = this;
         //target = new Vector3(target.x, throwPoint.position.y, target.z);
         bullet.OnInit();

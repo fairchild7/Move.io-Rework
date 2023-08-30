@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7284078420321114977}
-  - component: {fileID: 1038833398942070763}
   m_Layer: 7
-  m_Name: W_Knife
+  m_Name: I_Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,24 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 390.133, y: 246.361, z: 213.891}
---- !u!114 &1038833398942070763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4234545441232432491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f8ca1aad4447d14e938ab3200203abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cost: 100
-  image: {fileID: 0}
-  weapType: 2
-  attackType: 0
-  bullet: {fileID: -8847729523899253078, guid: 2e548d06f705c5e458dab2b0efbc96f3, type: 3}
-  prefab: {fileID: 4234545441232432491}
 --- !u!1001 &5751233446889095537
 PrefabInstance:
   m_ObjectHideFlags: 0

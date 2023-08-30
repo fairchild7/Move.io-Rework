@@ -33,15 +33,6 @@ public class GameManager : Singleton<GameManager>
         UIManager.Ins.OpenUI<UIMainMenu>();
     }
 
-    //delete this later
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log(gameState);
-        }    
-    }
-
     public static void ChangeState(GameState state)
     {
         gameState = state;
