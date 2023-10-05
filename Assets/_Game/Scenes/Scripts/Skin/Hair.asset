@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24289b5258d330409fe5002baaa0741, type: 3}
+  m_Name: Hair
+  m_EditorClassIdentifier: 
+  hairDatas:
+  - cost: 0
+    icon: {fileID: 0}
+    type: 0
+    hairPrefab: {fileID: 8935173062175033569, guid: 2146dabd6d2f5b94ebd015e9eb4e82b1, type: 3}
+  - cost: 1100
+    icon: {fileID: 21300000, guid: d1e3dc0b97c38354d933692ef2fd2db2, type: 3}
+    type: 1
+    hairPrefab: {fileID: 8613662577699793472, guid: 2d2eae380425bbe4ca4209b02baf7e6e, type: 3}
+  - cost: 1200
+    icon: {fileID: 21300000, guid: 4437d6733f75b3d4da9e8be1d9d360bf, type: 3}
+    type: 2
+    hairPrefab: {fileID: 3932130055520671502, guid: 24b91e362cb97244a9cf78867ea9b9fd, type: 3}
+  - cost: 1300
+    icon: {fileID: 21300000, guid: d504ffa4a6646404b95f0106e1134640, type: 3}
+    type: 3
+    hairPrefab: {fileID: 3090562053121238701, guid: 7b2c5bbaad7fbec40acb3e04674836c4, type: 3}
+  - cost: 1500
+    icon: {fileID: 21300000, guid: c1d2582bac2d775408f36cfe11376087, type: 3}
+    type: 4
+    hairPrefab: {fileID: 9114518313922212801, guid: e2a6735fd6b2a6d42a65394305d1f1b4, type: 3}
